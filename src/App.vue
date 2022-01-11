@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Header  @researchDone="axiosCall" />
+    <Movies :infoArray="responseArray" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Header from "./components/Header.vue";
+import Movies from "./components/Movies.vue";
+import axios from 'axios';
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Header,
+    Movies
   },
+  data:function(){
+    return{
+      searchedText: '',
+      responseArray: []
+    }
+  },
+  methods:{
+    // Calling the API and pushing the results into the responseArray array
+    axiosCall: function (text){
+      this.searchedText = text
+      axios.get('https://api.themoviedb.org/3/search/movie', {
+        params:{
+          api_key: "6defc1c860b27887bb893ddc9fb8fe05",
+          query: this.searchedText
+        }
+      }).then((response) =>{
+        this.responseArray = response.data.results
+        console.log(this.responseArray)
+      });
+    }
+  }
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import './style/general.scss';
 </style>
