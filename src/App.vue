@@ -60,4 +60,7 @@ export default {
 
 <style lang="scss">
 @import './style/general.scss';
+#app{
+  background-color: #434343;
+}
 </style>

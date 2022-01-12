@@ -1,17 +1,19 @@
 <template>
     <main>
-        <!-- Movies -->
-        <div class="search_results">
-            <h2>Films:</h2>
-            <div class="row row-cols-4">
-                <SingleCard v-for="(singleMovieCard, index) in moviesInfoArray" :key="index" :cardInfo="singleMovieCard" :variable="'title'"/>
+        <div class="my_container">
+            <!-- Movies -->
+            <div class="search_results">
+                <h2>Films:</h2>
+                <div class="d-flex flex-wrap justify-content-between">
+                    <SingleCard v-for="(singleMovieCard, index) in moviesInfoArray" :key="index" :cardInfo="singleMovieCard" :variable="'title'"/>
+                </div>
             </div>
-        </div>
-        <!-- Tv series -->
-        <div class="search_results">
-            <h2>Series:</h2>
-            <div class="row row-cols-4">
-                <SingleCard v-for="(singleSeriesCard, index) in seriesInfoArray" :key="index" :cardInfo="singleSeriesCard" :variable="'name'"/>
+            <!-- Tv series -->
+            <div class="search_results">
+                <h2>Series:</h2>
+                <div class="d-flex flex-wrap justify-content-between">
+                    <SingleCard v-for="(singleSeriesCard, index) in seriesInfoArray" :key="index" :cardInfo="singleSeriesCard" :variable="'name'"/>
+                </div>
             </div>
         </div>
     </main>
@@ -36,8 +38,15 @@ export default {
 main{
     height: calc(100vh - 80px);
     overflow-y: auto;
-    .search_results{
-        margin-bottom: 30px;
+    .my_container{
+        width: 95%;
+        margin: auto;
+        .search_results{
+            margin-bottom: 30px;
+            h2{
+                color: white;
+            }
+        }
     }
 }
 </style>

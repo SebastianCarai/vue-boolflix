@@ -2,6 +2,9 @@
     <div class="single_card">
         <ul>
             <li>
+                <img :src="`https://image.tmdb.org/t/p/w342${cardInfo.poster_path}`" alt="">
+            </li>
+            <li>
                 Nome: {{cardInfo[variable]}}
             </li>
             <li>
@@ -17,7 +20,9 @@
                 </span>
             </li>
             <li>
-                Voto: {{cardInfo.vote_average}}
+                Voto: 
+                <i class="fas fa-star full_star" v-for="(star, index) in starVote" :key="index"></i>
+                <i class="far fa-star" v-for="(empty, i) in (5 - starVote)" :key="i"></i>
             </li>
         </ul>
     </div>
@@ -35,23 +40,30 @@ export default {
     },
     data: function(){
         return{
-            // flag
+            starVote: parseInt(Math.round(this.cardInfo.vote_average / 2)),
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '../style/general.scss';
+
 .single_card{
     border: 1px solid black;
-    padding: 10px;
+    background-color: white;
+    width: 342px;
+    margin: 10px 0;
+    img{
+        width: 100%;
+    }
     .language_flag{
         width: 20px;
         position: relative;
         bottom: 1.5px;
+    } 
+    .full_star{
+        color: orange;
     }
-    .england_flag{
-    border: 1px solid black;
-    }  
 }
 </style>
