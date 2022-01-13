@@ -1,30 +1,41 @@
 <template>
     <div class="single_card">
-        <ul>
-            <li>
-                <img :src="`https://image.tmdb.org/t/p/w342${cardInfo.poster_path}`" alt="">
-            </li>
-            <li>
-                Nome: {{cardInfo[variable]}}
-            </li>
-            <li>
-                Nome originale: {{cardInfo['original_' + variable]}}
-            </li>
-            <li>
-                Lingua:
+
+        <div class="front_page" v-if="cardInfo.poster_path !== null">
+            <img :src="`https://image.tmdb.org/t/p/w342${cardInfo.poster_path}`" alt="">
+        </div>
+        <h2 v-else class="front_page"> {{ cardInfo[variable] }} </h2>
+
+        <div class="back_page">
+            <div>
+               <strong> Nome:</strong> {{cardInfo[variable]}}
+            </div>
+
+            <div>
+                <strong>Nome originale: </strong> {{cardInfo['original_' + variable]}}
+            </div>
+
+
+            <div>
+                <strong>Lingua</strong>:
                 <span v-if="cardInfo.original_language == 'it' || cardInfo.original_language == 'en' || cardInfo.original_language == 'es'">
                     <img :src="require(`../assets/img/${cardInfo.original_language}.png`)" alt="" class="language_flag">
                 </span> 
                 <span v-else>
                     {{cardInfo.original_language}}
                 </span>
-            </li>
-            <li>
-                Voto: 
+            </div>
+
+            <div>
+                <strong>Voto: </strong>
                 <i class="fas fa-star full_star" v-for="(star, index) in starVote" :key="index"></i>
                 <i class="far fa-star" v-for="(empty, i) in (5 - starVote)" :key="i"></i>
-            </li>
-        </ul>
+            </div>
+
+            <div>
+                <strong>Overview: </strong> {{cardInfo.overview}}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -53,17 +64,45 @@ export default {
     border: 1px solid black;
     background-color: white;
     width: 342px;
+    height: 507px;
     margin: 10px 0;
-    img{
+    border: 2px solid white;
+    .front_page{
+        height: 100%;
         width: 100%;
+        img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        }
     }
-    .language_flag{
+    h2.front_page{
+        text-align: center;
+        font-weight: bold;
+    }
+    .back_page{
+        display: none;
+        color: white;
+        background-color: black;
+        height: 100%;
+        padding: 8px;
+        .language_flag{
         width: 20px;
         position: relative;
         bottom: 1.5px;
-    } 
-    .full_star{
-        color: orange;
+        } 
+        .full_star{
+            color: orange;
+        }
+        div{
+            font-size: 16px;
+        }
     }
+}
+.single_card:hover .front_page{
+    display: none;
+}
+.single_card:hover .back_page{
+    display: block;
 }
 </style>
